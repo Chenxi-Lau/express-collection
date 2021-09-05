@@ -11,7 +11,7 @@ var router = express.Router()
 
 const crypto = require('crypto')
 const tokens = require('../utils/tokens')
-const usersModel = require('../models/users')
+const usersModel = require('../dbs/users')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

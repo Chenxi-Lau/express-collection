@@ -6,18 +6,16 @@
  * @Description: In User Settings Edit
  * @FilePath: \node-jwt-demo\express-based\app.js
  */
-var createError = require('http-errors')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
-
-var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
+import path from 'path'
+import logger from 'morgan'
+import express from 'express'
+import createError from 'http-errors'
+import cookieParser from 'cookie-parser'
+import routers from './src/router.config' // Router
 
 var app = express()
 
-const tokens = require('./utils/tokens')
+const tokens = require('./src/utils/tokens')
 const expressJwt = require('express-jwt')
 // ! 解析Token获取用户信息
 app.use(function (req, res, next) {
@@ -34,6 +32,11 @@ app.use(function (req, res, next) {
   }
 })
 
+//! 挂载所有的路由
+routers.forEach(item => {
+  app.use(item.prefix, item.router)
+})
+
 //! 验证 Token 是否过期并设置白名单
 app.use(expressJwt({
   secret: 'express_jwt_key',
@@ -43,7 +46,7 @@ app.use(expressJwt({
 }))
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'src/views'))
 app.set('view engine', 'jade')
 
 app.use(logger('dev'))
@@ -51,9 +54,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-
-app.use('/', indexRouter)
-app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
