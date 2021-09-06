@@ -1,13 +1,12 @@
 /*
- * @Author: your name
+ * @Author: 刘晨曦
  * @Date: 2021-03-18 11:18:42
- * @LastEditTime: 2021-03-18 14:04:56
+ * @LastEditTime: 2021-09-06 11:32:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-jwt-demo\express-based\db.config.js
  */
 const Sequelize = require('sequelize')
-
 const config = {
   host: 'localhost',
   username: 'root',
