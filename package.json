@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node ./bin/www"
+    "start": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
     "consola": "^2.15.3",
     "cookie-parser": "~1.4.4",
-    "crypto.js": "^2.0.2",
+    "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-jwt": "^6.0.0",
@@ -20,7 +20,9 @@
     "sequelize": "^6.5.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.12"
   }
 }

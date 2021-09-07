@@ -1,15 +1,16 @@
 /*
- * @Author: your name
- * @Date: 2021-03-18 11:22:25
- * @LastEditTime: 2021-03-18 14:06:33
+ * @Author: 刘晨曦
+ * @Date: 2021-09-06 18:23:51
+ * @LastEditTime: 2021-09-07 12:00:13
  * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \node-jwt-demo\express-based\models\users.js
+ * @Description: 数据库映射关系
+ * @FilePath: \express-collection\src\dbs\users.js
  */
-const db = require('../db.config.js')
-const Sequelize = require('sequelize')
+import db from '../db.config'
+import Sequelize from 'sequelize'
 
-let usersModel = db.define(
+// Object-Relational Mapping，把关系数据库的表结构映射到对象上。
+const usersModel = db.define(
   'users', // 数据库对应的表
   {
     userId: {
@@ -23,4 +24,5 @@ let usersModel = db.define(
     timestamps: false // 关闭Sequelize的自动添加timestamp的功能
   }
 )
-module.exports = usersModel
+
+export default usersModel

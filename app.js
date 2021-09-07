@@ -1,10 +1,10 @@
 /*
  * @Author: 刘晨曦
- * @Date: 2021-03-18 10:04:01
- * @LastEditTime: 2021-09-06 17:57:58
+ * @Date: 2021-09-06 18:23:51
+ * @LastEditTime: 2021-09-07 19:17:59
  * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \node-jwt-demo\express-based\app.js
+ * @Description: 项目入口文件
+ * @FilePath: \express-collection\app.js
  */
 import path from 'path'
 import logger from 'morgan'
@@ -12,12 +12,18 @@ import express from 'express'
 import createError from 'http-errors'
 import cookieParser from 'cookie-parser'
 import routers from './src/router.config' // Router
+import tokens from './src/utils'
+import expressJwt from 'express-jwt'
+import { SIGN_KEY } from './src/constant'
 
-var app = express()
+const app = express()
 
-const tokens = require('./src/utils/tokens')
-const expressJwt = require('express-jwt')
-// ! 解析Token获取用户信息
+// registered all routers
+routers.forEach(item => {
+  app.use(item.prefix, item.router)
+})
+
+// parse token
 app.use(function (req, res, next) {
   const token = req.headers['authorization']
   if (token == undefined) {
@@ -32,17 +38,12 @@ app.use(function (req, res, next) {
   }
 })
 
-//! 挂载所有的路由
-routers.forEach(item => {
-  app.use(item.prefix, item.router)
-})
-
-//! 验证 Token 是否过期并设置白名单
+// authentication token
 app.use(expressJwt({
-  secret: 'express_jwt_key',
+  secret: SIGN_KEY,
   algorithms: ['HS256']
 }).unless({
-  path: ['/', '/users/', '/users/login']
+  path: ['/', '/api/user/', '/api/user/login']
 }))
 
 // view engine setup
@@ -65,7 +66,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
-  //! catch 401 error
+  // catch 401 error
   if (err.name === 'UnauthorizedError') {
     res.status(401)
     res.json({
