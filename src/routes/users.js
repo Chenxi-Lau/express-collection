@@ -1,7 +1,7 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-09-06 18:23:51
- * @LastEditTime: 2021-09-07 19:17:24
+ * @LastEditTime: 2021-09-07 20:25:37
  * @LastEditors: Please set LastEditors
  * @Description: 测试
  * @FilePath: \express-collection\src\routes\users.js
@@ -23,8 +23,7 @@ router.get('/', function (req, res) {
 
 /* POST User Login */
 router.post('/login', async (req, res) => {
-  console.log(req, 'req')
-  const { userName, password } = req.query
+  const { userName, password } = req.body
   if (!(userName && password)) {
     return res.json(response.createCustomResponse('000002', '参数不合法'))
   }
