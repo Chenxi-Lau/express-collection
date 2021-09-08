@@ -1,7 +1,7 @@
 <!--
  * @Author: 刘晨曦 <lcxcsy@126.com>
  * @Date: 2021-03-18 10:04:42
- * @LastEditTime: 2021-09-08 11:37:27
+ * @LastEditTime: 2021-09-08 17:06:35
  * @LastEditors: Please set LastEditors
  * @Description: README
  * @FilePath: \node-jwt-demo\express-based\README.md
@@ -11,9 +11,7 @@
 
 > Express 技术栈，整合一些相关项目。
 
-[Express 中文官网](https://www.expressjs.com.cn/)
-
-main 分支为通过 express-generator 生成的原始项目，做了目录结构和部分代码调整。
+Main 分支为通过 express-generator 生成的原始项目，做了目录结构和部分代码调整。因为对企业级的 Express 项目没有接触过，项目暂时比较简陋，后续持续更新...
 
 ### 基本指令
 
@@ -105,6 +103,7 @@ npm install --save-dev nodemon
 
 package.json 中 start 命令修改为：**nodemon --exec babel-node ./bin/www**。
 
-## References
+### References
 
-1. [使用 Sequelize](https://www.liaoxuefeng.com/wiki/1022910821149312/1101571555324224)
+1. [Sequelize](https://www.liaoxuefeng.com/wiki/1022910821149312/1101571555324224)
+2. [Express 中文官网](https://www.expressjs.com.cn/)
