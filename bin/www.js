@@ -4,10 +4,11 @@
  * Module dependencies.
  */
 
-var app = require('../app')
+// var app = require('../app')
+import http from 'http'
+import app from '../app'
+import consola from 'consola'
 var debug = require('debug')('express-based:server')
-var http = require('http')
-const consola = require('consola')
 
 /**
   * Get port from environment and store in Express.
@@ -56,18 +57,18 @@ function onError (error) {
     throw error
   }
 
-  var bind = typeof port === 'string'
+  const bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      consola.error(bind + ' requires elevated privileges')
       process.exit(1)
       break
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      consola.error(bind + ' is already in use')
       process.exit(1)
       break
     default:

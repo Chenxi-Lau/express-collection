@@ -1,9 +1,9 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-09-06 18:23:51
- * @LastEditTime: 2021-09-07 20:25:37
+ * @LastEditTime: 2021-09-08 16:59:25
  * @LastEditors: Please set LastEditors
- * @Description: 测试
+ * @Description: POST请求修改为BodyParse的方式
  * @FilePath: \express-collection\src\routes\users.js
  */
 import express from 'express'
@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
 router.post('/login', async (req, res) => {
   const { userName, password } = req.body
   if (!(userName && password)) {
-    return res.json(response.createCustomResponse('000002', '参数不合法'))
+    return res.json(response.createCustomResponse('-1', 'Params are not valid'))
   }
   const result = await usersModel.findAll({
     where: {
@@ -37,17 +37,17 @@ router.post('/login', async (req, res) => {
     const token = await tokenInstance.sign(result[0].userName, result[0].userId)
     return res.json(response.createItemResponse({ userInfo: result[0], token }))
   } else {
-    return res.json(response.createCustomResponse('000002', '用户名或密码错误'))
+    return res.json(response.createCustomResponse('-1', '用户名或密码错误'))
   }
 })
 
 /* POST User Auth */
 router.post('/auth', (req, res) => {
-  const { data: { name, _id } } = req.data
-  if (name && _id) {
+  if (req.data) {
+    const { name, _id } = req.data
     return res.json(response.createItemResponse({ userName: name, userId: _id }))
   } else {
-    return res.json(response.createCustomResponse('-1', '未获取到用户信息'))
+    return res.json(response.createCustomResponse('-1', 'No user information is obtained.'))
   }
 })
 

@@ -1,7 +1,7 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-03-18 14:10:55
- * @LastEditTime: 2021-09-07 16:52:10
+ * @LastEditTime: 2021-09-08 16:23:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-jwt-demo\express-based\utils\token.js
@@ -25,7 +25,7 @@ export class TokenUtil {
       }, SIGN_KEY, {
         expiresIn: '1h'
       } )
-      resolve(token)
+      resolve(`Bearer ${token}`)
     })
   }
 

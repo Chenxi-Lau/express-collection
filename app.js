@@ -1,7 +1,7 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-09-06 18:23:51
- * @LastEditTime: 2021-09-07 20:21:51
+ * @LastEditTime: 2021-09-08 16:21:12
  * @LastEditors: Please set LastEditors
  * @Description: 项目入口文件
  * @FilePath: \express-collection\app.js
@@ -21,23 +21,9 @@ const app = express()
 const response = new Response()
 const tokenUtil = new TokenUtil()
 
-// view engine setup
-app.set('views', path.join(__dirname, 'src/views'))
-app.set('view engine', 'jade')
-
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
-
-// registered all routers
-routers.forEach(item => {
-  app.use(item.prefix, item.router)
-})
-
 // parse token
 app.use(function (req, res, next) {
+  console.log(req.headers)
   const token = req.headers['authorization']
   if (token == undefined) {
     return next()
@@ -58,6 +44,21 @@ app.use(expressJwt({
 }).unless({
   path: ['/', '/api/user/', '/api/user/login']
 }))
+
+// view engine setup
+app.set('views', path.join(__dirname, 'src/views'))
+app.set('view engine', 'jade')
+
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
+
+// register all routers
+routers.forEach(item => {
+  app.use(item.prefix, item.router)
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -80,4 +81,4 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-module.exports = app
+export default app
