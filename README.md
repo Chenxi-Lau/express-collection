@@ -1,7 +1,7 @@
 <!--
  * @Author: 刘晨曦 <lcxcsy@126.com>
  * @Date: 2021-03-18 10:04:42
- * @LastEditTime: 2021-09-08 17:06:35
+ * @LastEditTime: 2021-09-08 17:36:25
  * @LastEditors: Please set LastEditors
  * @Description: README
  * @FilePath: \node-jwt-demo\express-based\README.md
@@ -28,7 +28,7 @@ npm start
 
 ### 主要变动
 
-1. 目录结构变动：
+#### 1. 目录结构变动
 
 ```sh
 ├── app.js             // 主入口
@@ -55,23 +55,7 @@ npm start
   └── router.config.js // 路由的统一入口文件
 ```
 
-2. 支持 import/export
-
-项目通过安装 babel-core、babel-preset-env 支持 import/export 语法。
-
-```json
-{
-  "presets": ["env"]
-}
-```
-
-package.json 中 start 命令修改为：**babel-node ./bin/www**，如果提示 babel-node 命令无法识别，需要全局安装 babel-cli。
-
-```sh
-npm install babel-cli -g
-```
-
-3. 支持连接 MySQL 数据库
+#### 2. 连接 MySQL 数据库
 
 ```js
 import Sequelize from 'sequelize';
@@ -95,13 +79,33 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 export default sequelize;
 ```
 
-4. 支持自启动
+#### 3. 修改启动指令
+
+通过安装 babel-core、babel-preset-env 支持 import/export 语法。
+
+```json
+{
+  "presets": ["env"]
+}
+```
+
+package.json 中 start 命令修改为：**babel-node ./bin/www**，如果提示 babel-node 命令无法识别，需要全局安装 babel-cli。
+
+```sh
+npm install babel-cli -g
+```
+
+安装 nodemon 支持文件变动自启动
 
 ```sh
 npm install --save-dev nodemon
 ```
 
 package.json 中 start 命令修改为：**nodemon --exec babel-node ./bin/www**。
+
+#### 4. JWT 鉴权
+
+通过[express-jwt](https://www.npmjs.com/package/express-jwt) 和 [json-web-token](https://www.npmjs.com/package/json-web-token) 实现了路由基本权限管理。
 
 ### References
 
