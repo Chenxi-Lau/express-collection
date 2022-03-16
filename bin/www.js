@@ -6,7 +6,7 @@
 
 // var app = require('../app')
 import http from 'http'
-import app from '../app'
+import { app, server } from '../app'
 import consola from 'consola'
 var debug = require('debug')('express-based:server')
 
@@ -20,8 +20,8 @@ app.set('port', port)
 /**
   * Create HTTP server.
   */
-
-var server = http.createServer(app)
+// const server = http.Server(app)
+// var server = http.createServer(app)
 
 /**
   * Listen on provided port, on all network interfaces.

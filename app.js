@@ -1,7 +1,7 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-09-06 18:23:51
- * @LastEditTime: 2021-09-08 16:21:12
+ * @LastEditTime: 2021-09-16 14:58:57
  * @LastEditors: Please set LastEditors
  * @Description: 项目入口文件
  * @FilePath: \express-collection\app.js
@@ -16,14 +16,17 @@ import expressJwt from 'express-jwt'
 import { SIGN_KEY } from './src/constant'
 import { TokenUtil } from './src/utils/index'
 import Response from './src/controller/response'
+import expressWs from 'express-ws'
+import http from 'http'
 
 const app = express()
+const server = http.Server(app)
 const response = new Response()
 const tokenUtil = new TokenUtil()
+expressWs(app, server)
 
 // parse token
 app.use(function (req, res, next) {
-  console.log(req.headers)
   const token = req.headers['authorization']
   if (token == undefined) {
     return next()
@@ -81,4 +84,4 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-export default app
+export { app, server }

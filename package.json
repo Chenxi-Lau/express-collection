@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec babel-node ./bin/www"
+    "dev": "nodemon --exec babel-node ./bin/www",
+    "serve": "babel-node ./src/bin/www"
   },
   "dependencies": {
+    "@babel/runtime": "^7.16.3",
+    "@babel/runtime-corejs3": "^7.16.3",
     "consola": "^2.15.3",
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-jwt": "^6.0.0",
+    "express-ws": "^5.0.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
@@ -20,9 +24,30 @@
     "sequelize": "^6.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.17.5",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.16.4",
+    "eslint": "^8.10.0",
     "nodemon": "^2.0.12"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "ecmaVersion": 11,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-unused-vars": 1,
+      "no-undef": 1
+    }
   }
 }

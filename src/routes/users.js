@@ -1,7 +1,7 @@
 /*
  * @Author: 刘晨曦
  * @Date: 2021-09-06 18:23:51
- * @LastEditTime: 2021-09-08 16:59:25
+ * @LastEditTime: 2021-09-16 11:44:13
  * @LastEditors: Please set LastEditors
  * @Description: POST请求修改为BodyParse的方式
  * @FilePath: \express-collection\src\routes\users.js
@@ -22,32 +22,40 @@ router.get('/', function (req, res) {
 })
 
 /* POST User Login */
-router.post('/login', async (req, res) => {
-  const { userName, password } = req.body
-  if (!(userName && password)) {
-    return res.json(response.createCustomResponse('-1', 'Params are not valid'))
-  }
-  const result = await usersModel.findAll({
-    where: {
-      userName: userName,
-      password: aesCrypto.encrypt(userName, password)
+router.post('/login', async (req, res, next) => {
+  try {
+    const { userName, password } = req.body
+    if (!(userName && password)) {
+      return res.json(response.createCustomResponse('-1', 'Params are not valid'))
     }
-  })
-  if (result.length) {
-    const token = await tokenInstance.sign(result[0].userName, result[0].userId)
-    return res.json(response.createItemResponse({ userInfo: result[0], token }))
-  } else {
-    return res.json(response.createCustomResponse('-1', '用户名或密码错误'))
+    const result = await usersModel.findAll({
+      where: {
+        userName: userName,
+        password: aesCrypto.encrypt(userName, password)
+      }
+    })
+    if (result.length) {
+      const token = await tokenInstance.sign(result[0].userName, result[0].userId)
+      return res.json(response.createItemResponse({ userInfo: result[0], token }))
+    } else {
+      return res.json(response.createCustomResponse('-1', '用户名或密码错误'))
+    }
+  } catch (error) {
+    next(error)
   }
 })
 
 /* POST User Auth */
-router.post('/auth', (req, res) => {
-  if (req.data) {
-    const { name, _id } = req.data
-    return res.json(response.createItemResponse({ userName: name, userId: _id }))
-  } else {
-    return res.json(response.createCustomResponse('-1', 'No user information is obtained.'))
+router.post('/auth', (req, res, next) => {
+  try {
+    if (req.data) {
+      const { name, _id } = req.data
+      return res.json(response.createItemResponse({ userName: name, userId: _id }))
+    } else {
+      return res.json(response.createCustomResponse('-1', 'No user information is obtained.'))
+    }
+  } catch (error) {
+    next(error)
   }
 })
 
